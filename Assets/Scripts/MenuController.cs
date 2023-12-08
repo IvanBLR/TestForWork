@@ -1,4 +1,5 @@
 using System;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,6 +13,7 @@ public class MenuController : MonoBehaviour
 
     [SerializeField] private Canvas _menu;
 
+    [SerializeField] private TextMeshProUGUI _cash;
     [SerializeField] private Button _settings;
     [SerializeField] private Button _shop;
     [SerializeField] private Button _levels;
@@ -25,6 +27,11 @@ public class MenuController : MonoBehaviour
         _bonus.onClick.AddListener(OnBonusButtonClick);
     }
 
+    public void ChangeCash(int value)
+    {
+        int cash = Convert.ToInt32(_cash.text);
+        _cash.text = (cash + value).ToString();
+    }
     public void ActivateMainMenu(bool needActivate) => _menu.gameObject.SetActive(needActivate);
 
     #region OnButtonsClick

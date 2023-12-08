@@ -31,6 +31,8 @@ public class ViewManager : MonoBehaviour
         _settings.SoundTrackChange += OnSoundTrackChange;
         _settings.VolumeChange += OnVolumeValueChanged;
         _settings.SoundOff += OnSoundOff;
+
+        _dailyBonus.DailyBonusGot += _menu.ChangeCash;
     }
 
     private void OnDestroy()
@@ -43,6 +45,9 @@ public class ViewManager : MonoBehaviour
         _settings.VolumeChange -= OnVolumeValueChanged;
         _settings.SoundTrackChange -= OnSoundTrackChange;
         _settings.SoundOff -= OnSoundOff;
+        
+        _dailyBonus.DailyBonusGot -= _menu.ChangeCash;
+
     }
 
     [UsedImplicitly] // назначен на все кнопки "Меню"
