@@ -12,37 +12,41 @@ public class BonusController : MonoBehaviour
 {
     [SerializeField] private Canvas _bonusCanvas;
     [SerializeField] private Image _sorryText;
-    [SerializeField] private Button _gift;
+    [FormerlySerializedAs("_gift")] [SerializeField] private Button _giftButton;
 
 
     private bool _isBonusButtonInteractable;
     private bool _isSorryAnimationPlaying;
     private Color _primeColor;
+    private RectTransform _buttonRectTransform;
 
     private void Awake()
     {
         _primeColor = _sorryText.color;
         _sorryText.gameObject.SetActive(false);
+        _buttonRectTransform = _giftButton.GetComponent<RectTransform>();
     }
 
     [UsedImplicitly] // назначен на кнопку подарка. Если бонус ещё не начислен, активируется извиняшка
     public void ActivateSorryText()
     {
-        if (!_isBonusButtonInteractable)
-        {
-            StartCoroutine(ShowSorryViewEffect());
-        }
+        // if (!_isBonusButtonInteractable)
+        // {
+        //     StartCoroutine(ShowSorryViewEffect());
+        // }
+        ActivateBonusAnimation();
     }
 
     public void ActivateBonusAnimation()
     {
+        _buttonRectTransform.DORotate(new Vector3(0, 0, 1080), 1, RotateMode.FastBeyond360);
     }
 
     public void ActivateBonusMenu(bool needActivate) => _bonusCanvas.gameObject.SetActive(needActivate);
 
     private IEnumerator ShowSorryViewEffect()
     {
-        _gift.gameObject.SetActive(false);
+        _giftButton.gameObject.SetActive(false);
         _sorryText.gameObject.SetActive(true);
         yield return new WaitForSeconds(1);
         _sorryText.DOFade(0.35f, 2f)
@@ -54,7 +58,7 @@ public class BonusController : MonoBehaviour
     {
         _sorryText.gameObject.SetActive(false);
         _sorryText.color = _primeColor;
-        _gift.gameObject.SetActive(true);
+        _giftButton.gameObject.SetActive(true);
         _isSorryAnimationPlaying = false;
     }
 }
