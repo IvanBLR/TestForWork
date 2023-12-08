@@ -1,68 +1,50 @@
-using System.Collections;
-using System.Collections.Generic;
+using JetBrains.Annotations;
 using UnityEngine;
-using UnityEngine.Android;
 
 public class SoundManager : MonoBehaviour
 {
-    //TODO: некорректно работают конпки выключения звука и воспроизведения: смешиваются аудио-дорожки
     [SerializeField] private AudioSource _audioSource;
 
     [SerializeField] private AudioClip _click;
     [SerializeField] private AudioClip _purchases;
     [SerializeField] private AudioClip _bonus;
 
-    [SerializeField] private AudioClip _soundTrack1;
-    [SerializeField] private AudioClip _soundTrack2;
-    [SerializeField] private AudioClip _soundTrack3;
-    [SerializeField] private AudioClip _soundTrack4;
+    [SerializeField] private AudioClip[] _audioTracks;
 
     private bool _isSoundOn = true;
-
     private float _volumeValue;
 
-    //  private int _soundTrackNumber = 1;
-    public void ChangeVolume(float value)
+    [UsedImplicitly] // добавлен на все кнопки. Это звук клика на кнопку
+    public void PlaySoundOnButtonClick()
     {
-        _volumeValue = value;
         if (_isSoundOn)
-            _audioSource.volume = _volumeValue;
+            _audioSource.PlayOneShot(_click);
     }
 
-    public void SoundOff(bool isSoundOff)
+    public void ChangeVolume(float value)
     {
-        _isSoundOn = isSoundOff;
+        _audioSource.volume = value;
+    }
 
-        if (_isSoundOn)
-        {
-            _audioSource.volume = _volumeValue;
+    public void SoundOff(bool isSoundOn)
+    {
+        _isSoundOn = isSoundOn;
+
+        if (isSoundOn)
             _audioSource.Play();
-        }
         else
             _audioSource.Pause();
     }
 
-    public void ChangeTrack(int trackNumber)
+    public void ChangeTrack(int trackIndex)
     {
-        _audioSource.Stop();
-        //_soundTrackNumber = trackNumber;
-
-        if (_isSoundOn)
+        if (trackIndex < _audioTracks.Length)
         {
-            switch (trackNumber)
+            _audioSource.Stop();
+            _audioSource.clip = _audioTracks[trackIndex];
+            if (_isSoundOn)
             {
-                case 1:
-                    _audioSource.PlayOneShot(_soundTrack1);
-                    break;
-                case 2:
-                    _audioSource.PlayOneShot(_soundTrack2);
-                    break;
-                case 3:
-                    _audioSource.PlayOneShot(_soundTrack3);
-                    break;
-                case 4:
-                    _audioSource.PlayOneShot(_soundTrack4);
-                    break;
+                _audioSource.Play();
             }
         }
     }

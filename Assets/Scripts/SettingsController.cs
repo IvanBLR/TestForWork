@@ -1,12 +1,8 @@
 using System;
 using JetBrains.Annotations;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
-
-//using Random = System.Random;
-
 public class SettingsController : MonoBehaviour
 {
     public Action<float> VolumeChange;
@@ -14,9 +10,6 @@ public class SettingsController : MonoBehaviour
     public Action<bool> SoundOff;
 
     [SerializeField] private Canvas _settings;
-
-    [SerializeField] private Button _menu;
-    [SerializeField] private Button _musicButton;
     [SerializeField] private Slider _volume;
     [SerializeField] private Button _soundTumbler;
 
@@ -24,7 +17,6 @@ public class SettingsController : MonoBehaviour
     [SerializeField] private Sprite _soundOff;
 
     private bool _isSoundOn = true;
-
 
     [UsedImplicitly] // назначен на слайдер
     public void OnVolumeChange()
@@ -35,7 +27,7 @@ public class SettingsController : MonoBehaviour
     [UsedImplicitly] // назначен на кнопку Музыка.
     public void OnSoundTrackChange()
     {
-        int trackNumber = Random.Range(1, 5);
+        int trackNumber = Random.Range(0, 5);
         SoundTrackChange?.Invoke(trackNumber);
     }
 

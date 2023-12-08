@@ -8,6 +8,7 @@ public class MenuController : MonoBehaviour
     public Action ActivateShopMenu;
     public Action ActivateBonusMenu;
     public Action ActivateLevelsMenu;
+    //public Action DailyBonusActivate;
 
     [SerializeField] private Canvas _menu;
 

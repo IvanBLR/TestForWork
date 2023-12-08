@@ -1,4 +1,5 @@
 using System;
+using DefaultNamespace;
 using JetBrains.Annotations;
 using UnityEngine;
 
@@ -7,13 +8,13 @@ public class ViewManager : MonoBehaviour
     public Action<float> VolumeChange;
     public Action<int> SoundTrackChange;
     public Action<bool> SoundOnOff;
+    //public Action DailyBonusActivate;
 
     [SerializeField] private MenuController _menu;
     [SerializeField] private BonusController _dailyBonus;
     [SerializeField] private SettingsController _settings;
     [SerializeField] private ShopController _shop;
     [SerializeField] private LevelsController _levels;
-
 
     private void Awake()
     {
@@ -32,20 +33,17 @@ public class ViewManager : MonoBehaviour
         _settings.SoundOff += OnSoundOff;
     }
 
-
     private void OnDestroy()
     {
         _menu.ActivateBonusMenu -= ActivateBonusMenu;
         _menu.ActivateSettingsMenu -= ActivateSettingsMenu;
         _menu.ActivateLevelsMenu -= ActivateLevelsMenu;
         _menu.ActivateShopMenu -= ActivateShopMenu;
-        
+
         _settings.VolumeChange -= OnVolumeValueChanged;
         _settings.SoundTrackChange -= OnSoundTrackChange;
         _settings.SoundOff -= OnSoundOff;
-
     }
-
 
     [UsedImplicitly] // назначен на все кнопки "Меню"
     public void ReturnToMainMenu()
@@ -57,6 +55,11 @@ public class ViewManager : MonoBehaviour
         _levels.ActivateLevelsMenu(false);
     }
 
+    public void DailyBonusActivate()
+    {
+        _dailyBonus.ActivateBonusAnimation();
+    }
+    
     private void OnSoundTrackChange(int trackNumber)
     {
         SoundTrackChange?.Invoke(trackNumber);
@@ -76,6 +79,7 @@ public class ViewManager : MonoBehaviour
 
     private void ActivateBonusMenu()
     {
+       //PlayerPrefs.SetString(GameConstants.LAST_BONUS_DATA, System.DateTime.Today);
         _dailyBonus.ActivateBonusMenu(true);
         _menu.ActivateMainMenu(false);
     }
