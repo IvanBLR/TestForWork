@@ -1,4 +1,5 @@
 using System;
+using DefaultNamespace;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -9,15 +10,16 @@ public class MenuController : MonoBehaviour
     public Action ActivateShopMenu;
     public Action ActivateBonusMenu;
     public Action ActivateLevelsMenu;
-    //public Action DailyBonusActivate;
 
     [SerializeField] private Canvas _menu;
 
-    [SerializeField] private TextMeshProUGUI _cash;
+    [SerializeField] private TextMeshProUGUI _cashText;
     [SerializeField] private Button _settings;
     [SerializeField] private Button _shop;
     [SerializeField] private Button _levels;
     [SerializeField] private Button _bonus;
+
+    private int _cash;
 
     private void Awake()
     {
@@ -27,11 +29,37 @@ public class MenuController : MonoBehaviour
         _bonus.onClick.AddListener(OnBonusButtonClick);
     }
 
+    public void Start()
+    {
+        _cash = PlayerPrefs.GetInt(GameConstants.ACTUAL_CASH);
+        UpdateCash();
+    }
+
+    private void UpdateCash()
+    {
+        int cash = PlayerPrefs.GetInt(GameConstants.ACTUAL_CASH);
+
+        if (cash == 0) // лучше сделать -1. Типа если это самый первый запуск игры.
+                       // Иначе при расстрате всех денег можно снова косарь получить при запуске игры
+        {
+            _cash = 1000;
+            PlayerPrefs.SetInt(GameConstants.ACTUAL_CASH, _cash);
+            _cashText.text = _cash.ToString();
+
+        }
+        else
+        {
+            _cashText.text = cash.ToString();
+        }
+    }
+
     public void ChangeCash(int value)
     {
-        int cash = Convert.ToInt32(_cash.text);
-        _cash.text = (cash + value).ToString();
+        _cash += value;
+        _cashText.text = _cash.ToString();
+        PlayerPrefs.SetInt(GameConstants.ACTUAL_CASH, _cash);
     }
+
     public void ActivateMainMenu(bool needActivate) => _menu.gameObject.SetActive(needActivate);
 
     #region OnButtonsClick

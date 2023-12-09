@@ -60,9 +60,13 @@ public class ViewManager : MonoBehaviour
         _levels.ActivateLevelsMenu(false);
     }
 
+    // public void SetActualCashView(string cash)
+    // {
+    //     _menu.UpdateCashView(cash);
+    // }
     public void DailyBonusActivate()
     {
-        _dailyBonus.ActivateBonusAnimation();
+        _dailyBonus.ActivateBonusButton();
     }
     
     private void OnSoundTrackChange(int trackNumber)

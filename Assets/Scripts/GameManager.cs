@@ -34,7 +34,8 @@ public class GameManager : MonoBehaviour
         {
             DateTime lastDateTime = DateTime.Parse(lastData);
             TimeSpan diffrence = currentData.Subtract(lastDateTime);
-            if (diffrence.Hours >= 24)
+
+            if (diffrence.Seconds >= 10) // TODO: изменить на часы
             {
                 _viewManager.DailyBonusActivate();
                 PlayerPrefs.SetString(GameConstants.LAST_BONUS_DATE, currentData.ToString("o"));

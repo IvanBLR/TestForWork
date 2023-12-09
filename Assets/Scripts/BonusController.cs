@@ -14,7 +14,7 @@ public class BonusController : MonoBehaviour
 
     [SerializeField] private Canvas _bonusCanvas;
     [SerializeField] private Image _sorryText;
-    [SerializeField] private Gifts _gifts;
+    [SerializeField] private Image _gift;
     [SerializeField] private Button _giftButton;
     [SerializeField] private ParticleSystem _particleSystem;
 
@@ -23,27 +23,34 @@ public class BonusController : MonoBehaviour
     private bool _isSorryAnimationPlaying;
     private Color _primeColor;
     private RectTransform _buttonRectTransform;
+    private RectTransform _giftRectTransform;
 
     private void Awake()
     {
         _primeColor = _sorryText.color;
         _sorryText.gameObject.SetActive(false);
         _buttonRectTransform = _giftButton.GetComponent<RectTransform>();
+        _giftRectTransform = _gift.GetComponent<RectTransform>();
     }
 
     [UsedImplicitly] // назначен на кнопку подарка. Если бонус ещё не начислен, активируется извиняшка
-    public void ActivateSorryText()
+    public void OnGiftButtonPressed()
     {
-        if (!_isBonusButtonInteractable)
+        if (_isBonusButtonInteractable)
+        {
+            ActivateBonusAnimation();
+
+            _isBonusButtonInteractable = false;
+        }
+        else
         {
             StartCoroutine(ShowSorryViewEffect());
         }
     }
 
-    public void ActivateBonusAnimation()
+    public void ActivateBonusButton()
     {
-        _buttonRectTransform.DORotate(new Vector3(0, 0, 1080), 1, RotateMode.FastBeyond360)
-            .OnComplete(OnCompleteBonusAnimation);
+        _isBonusButtonInteractable = true;
     }
 
     public void ActivateBonusMenu(bool needActivate) => _bonusCanvas.gameObject.SetActive(needActivate);
@@ -58,11 +65,26 @@ public class BonusController : MonoBehaviour
             .OnComplete(OnCompleteSorryAnimation);
     }
 
-    private void OnCompleteBonusAnimation()// TODO: надо доделать получениие награды. Use script Gifts
+    private void ActivateBonusAnimation()
+    {
+        _buttonRectTransform.DORotate(new Vector3(0, 0, 1080), 1, RotateMode.FastBeyond360)
+            .OnComplete(OnCompleteBonusAnimation);
+    }
+
+    private void OnCompleteBonusAnimation() 
     {
         _particleSystem.Play();
         DailyBonusGot?.Invoke(100);
-        //StartCoroutine(ActivateBonusText());
+        ActivateBonusText();
+    }
+
+    private void ActivateBonusText()
+    {
+        _gift.transform.localScale = Vector3.zero;
+        _gift.gameObject.SetActive(true);
+        _giftRectTransform.DOScale(Vector3.one, 1)
+            .SetDelay(0.2f)
+            .OnComplete(() => _gift.gameObject.SetActive(false));
     }
 
     private void OnCompleteSorryAnimation()
@@ -72,11 +94,4 @@ public class BonusController : MonoBehaviour
         _giftButton.gameObject.SetActive(true);
         _isSorryAnimationPlaying = false;
     }
-    //
-    // private IEnumerator ActivateBonusText()
-    // {
-    //     _bonusText.gameObject.SetActive(true);
-    //     yield return new WaitForSeconds(2);
-    //     _bonusText.gameObject.SetActive(false);
-    // }
 }
