@@ -20,7 +20,7 @@ public class BonusController : MonoBehaviour
 
 
     private bool _isBonusButtonInteractable;
-    private bool _isSorryAnimationPlaying;
+   // private bool _isSorryAnimationPlaying;
     private Color _primeColor;
     private RectTransform _buttonRectTransform;
     private RectTransform _giftRectTransform;
@@ -92,6 +92,6 @@ public class BonusController : MonoBehaviour
         _sorryText.gameObject.SetActive(false);
         _sorryText.color = _primeColor;
         _giftButton.gameObject.SetActive(true);
-        _isSorryAnimationPlaying = false;
+       // _isSorryAnimationPlaying = false;
     }
 }
