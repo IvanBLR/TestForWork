@@ -1,5 +1,4 @@
 using System;
-using DefaultNamespace;
 using JetBrains.Annotations;
 using UnityEngine;
 
@@ -18,6 +17,7 @@ public class ViewManager : MonoBehaviour
 
     private void Awake()
     {
+        DontDestroyOnLoad(this);
         ReturnToMainMenu();
     }
 

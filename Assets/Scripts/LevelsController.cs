@@ -1,6 +1,7 @@
 using DefaultNamespace;
 using JetBrains.Annotations;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class LevelsController : MonoBehaviour
@@ -14,6 +15,7 @@ public class LevelsController : MonoBehaviour
 
     private void Start()
     {
+        //PlayerPrefs.SetInt(GameConstants.LAST_UNLOCKED_LEVEL, 1);  это строчка для сброса игры на 1 уровень. Для тестов
         _currentUnlockedLevel = PlayerPrefs.GetInt(GameConstants.LAST_UNLOCKED_LEVEL);
         if (_currentUnlockedLevel == 0)
         {
@@ -24,19 +26,17 @@ public class LevelsController : MonoBehaviour
         UpdateUnlockedLevels();
     }
 
-    [UsedImplicitly] // назначен на вертикальный скролл, чтобы не листали сильно много вниз
-    public void OnScrolling()
+    [UsedImplicitly] // назначен на все кнопки уровней для запуска игры
+    public void StartLevel()
     {
-        if (_scrollbar.value < 0)
-            _scrollbar.value = 0;
+        SceneManager.LoadScene(1);
     }
 
     public void ActivateLevelsMenu(bool needActivate) => _levels.gameObject.SetActive(needActivate);
 
     private void UpdateUnlockedLevels()
     {
-        int lastIndex = _currentUnlockedLevel - 1;
-        for (int i = 0; i < lastIndex; i++)
+        for (int i = 0; i < _currentUnlockedLevel; i++)
         {
             _levelButtons[i].image.sprite = _unlockedSprite;
             _levelButtons[i].interactable = true;
