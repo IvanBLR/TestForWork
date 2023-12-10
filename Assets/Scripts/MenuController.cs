@@ -18,6 +18,7 @@ public class MenuController : MonoBehaviour
     [SerializeField] private Button _shop;
     [SerializeField] private Button _levels;
     [SerializeField] private Button _bonus;
+    //[SerializeField] private Button _startGame;  на эту кнопку назначен LevelController запуск игры
 
     private int _cash;
 

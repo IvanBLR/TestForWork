@@ -1,18 +1,23 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 public class AdsManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public Action LifeAdded;
+    [SerializeField] private PurchasesController _purchasesController;
+
+    private void Start()
     {
-        
+        _purchasesController.LifeAdded += OnLifeAdded;
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnDestroy()
     {
-        
+        _purchasesController.LifeAdded -= OnLifeAdded;
+    }
+
+    private void OnLifeAdded()
+    {
+        LifeAdded?.Invoke();
     }
 }

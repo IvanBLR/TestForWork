@@ -1,6 +1,7 @@
 using System;
 using DefaultNamespace;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class GameManager : MonoBehaviour
 {
@@ -13,6 +14,7 @@ public class GameManager : MonoBehaviour
     {
         UpdateDailyBonusDate();
 
+        _adsManager.LifeAdded += _viewManager.LifeButtomDisable;
         _viewManager.VolumeChange += _soundManager.ChangeVolume;
         _viewManager.SoundTrackChange += _soundManager.ChangeTrack;
         _viewManager.SoundOnOff += _soundManager.SoundOff;
@@ -20,6 +22,7 @@ public class GameManager : MonoBehaviour
 
     private void OnDestroy()
     {
+        _adsManager.LifeAdded -= _viewManager.LifeButtomDisable;
         _viewManager.VolumeChange -= _soundManager.ChangeVolume;
         _viewManager.SoundTrackChange -= _soundManager.ChangeTrack;
         _viewManager.SoundOnOff -= _soundManager.SoundOff;

@@ -60,10 +60,10 @@ public class ViewManager : MonoBehaviour
         _levels.ActivateLevelsMenu(false);
     }
 
-    // public void SetActualCashView(string cash)
-    // {
-    //     _menu.UpdateCashView(cash);
-    // }
+    public void LifeButtomDisable()
+    {
+        _shop.DeactivateButton();
+    }
     public void DailyBonusActivate()
     {
         _dailyBonus.ActivateBonusButton();
