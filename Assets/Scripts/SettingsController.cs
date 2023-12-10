@@ -1,8 +1,10 @@
 using System;
+using DefaultNamespace;
 using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
+
 public class SettingsController : MonoBehaviour
 {
     public Action<float> VolumeChange;
@@ -18,9 +20,15 @@ public class SettingsController : MonoBehaviour
 
     private bool _isSoundOn = true;
 
+    private void Start()
+    {
+        _volume.value = PlayerPrefs.GetFloat(GameConstants.VOLUME_VALUE);
+    }
+
     [UsedImplicitly] // назначен на слайдер
     public void OnVolumeChange()
     {
+        PlayerPrefs.SetFloat(GameConstants.VOLUME_VALUE, _volume.value);
         VolumeChange?.Invoke(_volume.value);
     }
 
@@ -34,7 +42,11 @@ public class SettingsController : MonoBehaviour
     [UsedImplicitly] // назначен на button-тумблер
     public void OnSoundOff()
     {
+        int sound = 0;
         _isSoundOn = !_isSoundOn;
+        if (_isSoundOn)
+            sound = 1;
+        PlayerPrefs.SetInt(GameConstants.SOUND_ON, sound);
         if (_isSoundOn)
             _soundTumbler.image.sprite = _soundOn;
         else

@@ -14,7 +14,7 @@ public class GameManager : MonoBehaviour
     {
         UpdateDailyBonusDate();
 
-        _adsManager.LifeAdded += _viewManager.LifeButtomDisable;
+        _adsManager.LifeAdded += _viewManager.LifeButtonDisable;
         _viewManager.VolumeChange += _soundManager.ChangeVolume;
         _viewManager.SoundTrackChange += _soundManager.ChangeTrack;
         _viewManager.SoundOnOff += _soundManager.SoundOff;
@@ -22,7 +22,7 @@ public class GameManager : MonoBehaviour
 
     private void OnDestroy()
     {
-        _adsManager.LifeAdded -= _viewManager.LifeButtomDisable;
+        _adsManager.LifeAdded -= _viewManager.LifeButtonDisable;
         _viewManager.VolumeChange -= _soundManager.ChangeVolume;
         _viewManager.SoundTrackChange -= _soundManager.ChangeTrack;
         _viewManager.SoundOnOff -= _soundManager.SoundOff;

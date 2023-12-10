@@ -1,3 +1,5 @@
+using System;
+using DefaultNamespace;
 using JetBrains.Annotations;
 using UnityEngine;
 
@@ -13,6 +15,14 @@ public class SoundManager : MonoBehaviour
 
     private bool _isSoundOn = true;
     private float _volumeValue;
+
+    private void Start()
+    {
+        _audioSource.volume = PlayerPrefs.GetFloat(GameConstants.VOLUME_VALUE);
+        int sound = PlayerPrefs.GetInt(GameConstants.SOUND_ON);
+        if (sound != 0)
+            _audioSource.Pause();
+    }
 
     [UsedImplicitly] // добавлен на все кнопки. Это звук клика на кнопку
     public void PlaySoundOnButtonClick()

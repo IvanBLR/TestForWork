@@ -15,7 +15,7 @@ public class LevelsController : MonoBehaviour
 
     private void Start()
     {
-        //PlayerPrefs.SetInt(GameConstants.LAST_UNLOCKED_LEVEL, 1);  это строчка для сброса игры на 1 уровень. Для тестов
+       // PlayerPrefs.SetInt(GameConstants.LAST_UNLOCKED_LEVEL, 1);//  это строчка для сброса игры на 1 уровень. Для тестов
         _currentUnlockedLevel = PlayerPrefs.GetInt(GameConstants.LAST_UNLOCKED_LEVEL);
         if (_currentUnlockedLevel == 0)
         {

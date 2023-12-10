@@ -18,7 +18,7 @@ public class ShopController : MonoBehaviour
 
     private void Start()
     {
-        //PlayerPrefs.SetInt(GameConstants.LONG_LIFE, 0);// эта строчка для сброса удлинённой жизни
+       // PlayerPrefs.SetInt(GameConstants.LONG_LIFE, 0);// эта строчка для сброса удлинённой жизни
         UpdateShopButtons();
     }
 
@@ -50,7 +50,7 @@ public class ShopController : MonoBehaviour
             _tempButtons[i].gameObject.SetActive(false);
             _purchases[i].interactable = true;
         }
-
+       
         int life = PlayerPrefs.GetInt(GameConstants.LONG_LIFE);
         if (life == 1)
             _lifeButton.interactable = false;

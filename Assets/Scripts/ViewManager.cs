@@ -7,7 +7,6 @@ public class ViewManager : MonoBehaviour
     public Action<float> VolumeChange;
     public Action<int> SoundTrackChange;
     public Action<bool> SoundOnOff;
-    //public Action DailyBonusActivate;
 
     [SerializeField] private MenuController _menu;
     [SerializeField] private BonusController _dailyBonus;
@@ -60,7 +59,7 @@ public class ViewManager : MonoBehaviour
         _levels.ActivateLevelsMenu(false);
     }
 
-    public void LifeButtomDisable()
+    public void LifeButtonDisable()
     {
         _shop.DeactivateButton();
     }

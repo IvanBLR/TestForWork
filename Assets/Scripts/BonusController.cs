@@ -1,11 +1,8 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using DG.Tweening;
 using JetBrains.Annotations;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class BonusController : MonoBehaviour
@@ -92,6 +89,5 @@ public class BonusController : MonoBehaviour
         _sorryText.gameObject.SetActive(false);
         _sorryText.color = _primeColor;
         _giftButton.gameObject.SetActive(true);
-       // _isSorryAnimationPlaying = false;
     }
 }
